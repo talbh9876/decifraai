@@ -1,0 +1,48 @@
+{
+  "name": "Folder",
+  "type": "object",
+  "properties": {
+    "name": {
+      "type": "string",
+      "description": "Folder name"
+    },
+    "ownerAuthId": {
+      "type": "string",
+      "description": "Owner's Base44 auth ID"
+    },
+    "color": {
+      "type": "string",
+      "enum": [
+        "blue",
+        "green",
+        "red",
+        "yellow",
+        "purple",
+        "pink",
+        "gray"
+      ],
+      "default": "blue",
+      "description": "Folder color"
+    },
+    "icon": {
+      "type": "string",
+      "default": "folder",
+      "description": "Folder icon name"
+    }
+  },
+  "required": [
+    "name",
+    "ownerAuthId"
+  ],
+  "rls": {
+    "read": {
+      "ownerAuthId": "{{user.id}}"
+    },
+    "update": {
+      "ownerAuthId": "{{user.id}}"
+    },
+    "delete": {
+      "ownerAuthId": "{{user.id}}"
+    }
+  }
+}

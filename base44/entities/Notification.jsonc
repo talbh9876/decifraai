@@ -1,0 +1,88 @@
+{
+  "name": "Notification",
+  "type": "object",
+  "properties": {
+    "userId": {
+      "type": "string",
+      "description": "User ID receiving the notification"
+    },
+    "title": {
+      "type": "string",
+      "description": "Notification title"
+    },
+    "message": {
+      "type": "string",
+      "description": "Notification message content"
+    },
+    "type": {
+      "type": "string",
+      "enum": [
+        "document_reviewed",
+        "new_message",
+        "system"
+      ],
+      "description": "Type of notification"
+    },
+    "documentId": {
+      "type": "string",
+      "description": "Related document ID if applicable"
+    },
+    "isRead": {
+      "type": "boolean",
+      "default": false,
+      "description": "Whether notification has been read"
+    },
+    "createdAt": {
+      "type": "string",
+      "format": "date-time",
+      "description": "When notification was created"
+    }
+  },
+  "required": [
+    "userId",
+    "title",
+    "message",
+    "type"
+  ],
+  "rls": {
+    "create": {
+      "userId": "{{user.email}}"
+    },
+    "read": {
+      "$or": [
+        {
+          "userId": "{{user.email}}"
+        },
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        }
+      ]
+    },
+    "update": {
+      "$or": [
+        {
+          "userId": "{{user.email}}"
+        },
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        }
+      ]
+    },
+    "delete": {
+      "$or": [
+        {
+          "userId": "{{user.email}}"
+        },
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        }
+      ]
+    }
+  }
+}

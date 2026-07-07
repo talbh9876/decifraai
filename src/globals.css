@@ -1,0 +1,165 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --background: 0 0% 100%;
+    --foreground: 222.2 84% 4.9%;
+    --card: 0 0% 100%;
+    --card-foreground: 222.2 84% 4.9%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 222.2 84% 4.9%;
+    --primary: 222.2 47.4% 11.2%;
+    --primary-foreground: 210 40% 98%;
+    --secondary: 210 40% 96.1%;
+    --secondary-foreground: 222.2 47.4% 11.2%;
+    --muted: 210 40% 96.1%;
+    --muted-foreground: 215.4 16.3% 46.9%;
+    --accent: 210 40% 96.1%;
+    --accent-foreground: 222.2 47.4% 11.2%;
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 210 40% 98%;
+    --border: 214.3 31.8% 91.4%;
+    --input: 214.3 31.8% 91.4%;
+    --ring: 222.2 84% 4.9%;
+    --radius: 0.5rem;
+  }
+
+  .dark {
+    --background: 222 47% 5%;
+    --foreground: 210 40% 98%;
+    --card: 222 47% 8%;
+    --card-foreground: 210 40% 98%;
+    --popover: 222 47% 8%;
+    --popover-foreground: 210 40% 98%;
+    --primary: 210 40% 98%;
+    --primary-foreground: 222.2 47.4% 11.2%;
+    --secondary: 217.2 32.6% 17.5%;
+    --secondary-foreground: 210 40% 98%;
+    --muted: 217.2 32.6% 17.5%;
+    --muted-foreground: 215 20.2% 65.1%;
+    --accent: 217.2 32.6% 17.5%;
+    --accent-foreground: 210 40% 98%;
+    --destructive: 0 62.8% 30.6%;
+    --destructive-foreground: 210 40% 98%;
+    --border: 217.2 32.6% 17.5%;
+    --input: 217.2 32.6% 17.5%;
+    --ring: 212.7 26.8% 83.9%;
+  }
+
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply bg-background text-foreground;
+    font-family: 'Inter', 'Assistant', -apple-system, BlinkMacSystemFont, sans-serif;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-semibold;
+  }
+
+  button {
+    @apply font-semibold;
+  }
+
+  /* Dark Mode - Override specific app colors */
+  .dark {
+    background-color: #0A0613;
+  }
+
+  .dark h1, .dark h2, .dark h3, .dark h4, .dark h5, .dark h6 {
+    color: #F5F3FF !important;
+  }
+
+  /* Floating animation */
+  @keyframes float {
+    0%, 100% { transform: translateY(0px); }
+    50% { transform: translateY(-20px); }
+  }
+
+  .animate-float {
+    animation: float 3s ease-in-out infinite;
+  }
+
+  .dark [class*="bg-white"]:not([class*="hover:"]) {
+    background-color: #1A1F2E !important;
+  }
+
+  .dark [class*="bg-[#F8F9FB]"]:not([class*="hover:"]),
+  .dark [class*="bg-[#F5F6F7]"]:not([class*="hover:"]),
+  .dark [class*="bg-[#F5F8FB]"]:not([class*="hover:"]) {
+    background-color: #0F1419 !important;
+  }
+
+  .dark [class*="text-[#1A1F36]"],
+  .dark [class*="text-[#0F1E2E]"] {
+    color: #E8EAED !important;
+  }
+
+  .dark [class*="text-[#4A5568]"],
+  .dark [class*="text-[#5A6B7D]"] {
+    color: #9CA3AF !important;
+  }
+
+  .dark [class*="text-[#8A9AAD]"],
+  .dark [class*="text-[#9CA3AF]"] {
+    color: #6B7280 !important;
+  }
+
+  .dark [class*="border-[#E3E6EB]"],
+  .dark [class*="border-[#E5E8EB]"],
+  .dark [class*="border-[#D9DDE1]"] {
+    border-color: #2D3748 !important;
+  }
+
+  .dark [class*="bg-[#EBF2FE]"] {
+    background-color: #1E3A5F !important;
+  }
+
+  .dark [class*="bg-[#FEF3E2]"] {
+    background-color: #3D2F1F !important;
+  }
+
+  .dark [class*="bg-[#E7F7ED]"] {
+    background-color: #1F3D2F !important;
+  }
+
+  .dark [class*="hover:bg-[#F8F9FB]"]:hover,
+  .dark [class*="hover:bg-[#F5F6F7]"]:hover {
+    background-color: #1E293B !important;
+  }
+
+  .dark [class*="hover:border-[#2E6BDE]"]:hover {
+    border-color: #4A90E2 !important;
+  }
+
+  /* Shadows in dark mode - softer */
+  .dark [class*="shadow-lg"],
+  .dark [class*="shadow-xl"],
+  .dark [class*="shadow-2xl"] {
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5) !important;
+  }
+
+  .dark [class*="shadow-sm"],
+  .dark [class*="shadow"] {
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3) !important;
+  }
+}
+
+@layer components {
+  .btn-primary {
+    @apply bg-gradient-to-r from-[#1E63F0] to-[#0099A8] text-white hover:from-[#0A2A43] hover:to-[#1E63F0] font-semibold py-2 px-4 rounded-xl;
+  }
+  .btn-secondary {
+    @apply bg-white border-2 border-[#E5E8EB] text-[#0A2A43] hover:border-[#1E63F0] hover:bg-[#F7F9FB] font-semibold py-2 px-4 rounded-xl;
+  }
+  .card {
+    @apply bg-white border border-[#E5E8EB] rounded-2xl p-8 shadow-sm;
+  }
+  .link {
+    @apply text-[#1E63F0] hover:text-[#0099A8] underline;
+  }
+}

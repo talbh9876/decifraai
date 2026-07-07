@@ -1,0 +1,115 @@
+{
+  "name": "LawyerCase",
+  "type": "object",
+  "properties": {
+    "documentId": {
+      "type": "string",
+      "description": "Reference to the document"
+    },
+    "clientUserId": {
+      "type": "string",
+      "description": "Client user ID"
+    },
+    "lawyerUserId": {
+      "type": "string",
+      "description": "Assigned lawyer user ID"
+    },
+    "client_summary": {
+      "type": "string",
+      "description": "AI-generated summary of client conversation"
+    },
+    "urgency": {
+      "type": "string",
+      "enum": [
+        "low",
+        "medium",
+        "high"
+      ],
+      "default": "medium"
+    },
+    "estimated_hours": {
+      "type": "number",
+      "description": "Estimated time to complete review"
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "pending",
+        "in_progress",
+        "completed"
+      ],
+      "default": "pending"
+    },
+    "client_name": {
+      "type": "string"
+    },
+    "client_email": {
+      "type": "string"
+    },
+    "attachments": {
+      "type": "array",
+      "description": "Additional files uploaded by lawyer",
+      "items": {
+        "type": "object",
+        "properties": {
+          "file_url": {
+            "type": "string"
+          },
+          "file_name": {
+            "type": "string"
+          },
+          "uploaded_date": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "lawyer_notes": {
+      "type": "string",
+      "description": "Internal notes for the lawyer"
+    }
+  },
+  "required": [
+    "documentId",
+    "clientUserId",
+    "client_name",
+    "client_email"
+  ],
+  "rls": {
+    "create": {
+      "clientUserId": "{{user.id}}"
+    },
+    "read": {
+      "$or": [
+        {
+          "clientUserId": "{{user.id}}"
+        },
+        {
+          "lawyerUserId": "{{user.id}}"
+        },
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        }
+      ]
+    },
+    "update": {
+      "$or": [
+        {
+          "lawyerUserId": "{{user.id}}"
+        },
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        }
+      ]
+    },
+    "delete": {
+      "user_condition": {
+        "role": "admin"
+      }
+    }
+  }
+}

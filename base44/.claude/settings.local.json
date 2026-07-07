@@ -1,0 +1,9 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(ls -la /Users/talbenhamo/.claude/projects/ | grep -i decifra)",
+      "Bash(xargs -I{} sh -c 'echo \"=== {} ===\"; ls -la \"{}\"')",
+      "Bash(cd /Users/talbenhamo/Desktop/decifra && echo \"=== .env files ===\" && find . -maxdepth 1 -iname \".env*\" && echo \"=== gitignore ===\" && cat .gitignore && echo \"=== node_modules base44 plugin ===\" && ls node_modules/@base44 2>/dev/null && echo \"=== plugin package.json ===\" && cat node_modules/@base44/vite-plugin/package.json 2>/dev/null | head -30)"
+    ]
+  }
+}

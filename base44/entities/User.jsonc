@@ -1,0 +1,23 @@
+{
+  "name": "User",
+  "type": "object",
+  "properties": {
+    "plan": {
+      "type": "string",
+      "enum": [
+        "free",
+        "beginner",
+        "pro",
+        "business"
+      ],
+      "default": "free",
+      "description": "Subscription plan"
+    },
+    "scansUsed": {
+      "type": "number",
+      "default": 0,
+      "description": "Number of scans used in current period"
+    }
+  },
+  "required": []
+}

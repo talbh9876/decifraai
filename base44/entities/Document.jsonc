@@ -1,0 +1,297 @@
+{
+  "name": "Document",
+  "type": "object",
+  "properties": {
+    "ownerAuthId": {
+      "type": "string",
+      "description": "Owner's Base44 auth ID (from auth.me())"
+    },
+    "userId": {
+      "type": "string",
+      "description": "Legacy field - same as ownerAuthId for backwards compatibility"
+    },
+    "folderId": {
+      "type": "string",
+      "description": "ID of the folder this document belongs to"
+    },
+    "title": {
+      "type": "string",
+      "description": "Document title or filename"
+    },
+    "category": {
+      "type": "string",
+      "enum": [
+        "legal",
+        "financial",
+        "employment",
+        "real_estate",
+        "other"
+      ],
+      "description": "High-level category for the document"
+    },
+    "documentType": {
+      "type": "string",
+      "enum": [
+        "employment_contract",
+        "rental_agreement",
+        "pay_slip",
+        "insurance_policy",
+        "loan_agreement",
+        "purchase_agreement",
+        "other"
+      ],
+      "description": "Normalized document type for templates"
+    },
+    "analysisTemplate": {
+      "type": "string",
+      "enum": [
+        "payslip",
+        "employment_contract",
+        "rental_agreement",
+        "generic"
+      ],
+      "description": "Selected analysis template"
+    },
+    "document_type": {
+      "type": "string",
+      "enum": [
+        "employment_contract",
+        "rental_agreement",
+        "pay_slip",
+        "insurance_policy",
+        "loan_agreement",
+        "purchase_agreement",
+        "other"
+      ],
+      "description": "Type of document (legacy)"
+    },
+    "file_url": {
+      "type": "string",
+      "description": "URL of uploaded document"
+    },
+    "isFavorite": {
+      "type": "boolean",
+      "default": false,
+      "description": "Whether document is marked as favorite"
+    },
+    "tags": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "User-defined tags for organization"
+    },
+    "ai_analysis": {
+      "type": "object",
+      "description": "AI analysis results (legacy field)",
+      "properties": {
+        "executive_summary": {
+          "type": "string",
+          "description": "High-level executive summary"
+        },
+        "summary": {
+          "type": "string"
+        },
+        "key_points": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "risk_factors": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "recommendations": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "legal_terms": {
+          "type": "array",
+          "description": "Complex legal terms found in document",
+          "items": {
+            "type": "object",
+            "properties": {
+              "term": {
+                "type": "string"
+              },
+              "explanation": {
+                "type": "string"
+              },
+              "location": {
+                "type": "string"
+              }
+            }
+          }
+        },
+        "inconsistencies": {
+          "type": "array",
+          "description": "Internal inconsistencies found in the document",
+          "items": {
+            "type": "object",
+            "properties": {
+              "type": {
+                "type": "string"
+              },
+              "description": {
+                "type": "string"
+              },
+              "severity": {
+                "type": "string",
+                "enum": [
+                  "low",
+                  "medium",
+                  "high"
+                ]
+              },
+              "locations": {
+                "type": "string"
+              }
+            }
+          }
+        },
+        "cross_references": {
+          "type": "array",
+          "description": "Dependencies between clauses",
+          "items": {
+            "type": "object",
+            "properties": {
+              "clause": {
+                "type": "string"
+              },
+              "depends_on": {
+                "type": "string"
+              },
+              "explanation": {
+                "type": "string"
+              }
+            }
+          }
+        }
+      }
+    },
+    "user_notes": {
+      "type": "array",
+      "description": "User's notes and corrections on the analysis",
+      "items": {
+        "type": "object",
+        "properties": {
+          "section": {
+            "type": "string"
+          },
+          "note": {
+            "type": "string"
+          },
+          "timestamp": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "uploaded",
+        "analyzing",
+        "analyzed",
+        "lawyer_requested",
+        "lawyer_reviewing",
+        "completed"
+      ],
+      "default": "uploaded"
+    },
+    "lawyer_review": {
+      "type": "object",
+      "properties": {
+        "lawyer_id": {
+          "type": "string"
+        },
+        "review_summary": {
+          "type": "string"
+        },
+        "legal_recommendation": {
+          "type": "string"
+        },
+        "signed_date": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "lawyer_name": {
+          "type": "string"
+        }
+      }
+    },
+    "analysisStatus": {
+      "type": "string",
+      "enum": [
+        "pending",
+        "done",
+        "error"
+      ],
+      "description": "Current AI analysis status"
+    },
+    "analysisResult": {
+      "type": "object",
+      "description": "Stored AI analysis result (preferred new field)"
+    },
+    "analyzedAt": {
+      "type": "string",
+      "format": "date-time",
+      "description": "When the analysis was completed"
+    },
+    "analysisVersion": {
+      "type": "string",
+      "default": "v1",
+      "description": "Version of the analysis pipeline"
+    },
+    "extractedText": {
+      "type": "string",
+      "description": "Extracted plain text from the document (optional)"
+    },
+    "sourceText": {
+      "type": "string",
+      "description": "Original source text blob if available (optional)"
+    }
+  },
+  "required": [
+    "title",
+    "document_type",
+    "file_url"
+  ],
+  "rls": {
+    "read": {
+      "$or": [
+        {
+          "ownerAuthId": "{{user.id}}"
+        },
+        {
+          "created_by": "{{user.email}}"
+        }
+      ]
+    },
+    "update": {
+      "$or": [
+        {
+          "ownerAuthId": "{{user.id}}"
+        },
+        {
+          "created_by": "{{user.email}}"
+        }
+      ]
+    },
+    "delete": {
+      "$or": [
+        {
+          "ownerAuthId": "{{user.id}}"
+        },
+        {
+          "created_by": "{{user.email}}"
+        }
+      ]
+    }
+  }
+}

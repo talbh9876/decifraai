@@ -1,0 +1,99 @@
+{
+  "name": "Users",
+  "type": "object",
+  "properties": {
+    "authId": {
+      "type": "string",
+      "description": "Base44 auth user ID (from auth.me())"
+    },
+    "email": {
+      "type": "string",
+      "description": "User email address (unique)"
+    },
+    "name": {
+      "type": "string",
+      "description": "User full name"
+    },
+    "role": {
+      "type": "string",
+      "enum": [
+        "user",
+        "lawyer",
+        "admin"
+      ],
+      "default": "user",
+      "description": "User role"
+    },
+    "plan": {
+      "type": "string",
+      "enum": [
+        "free",
+        "beginner",
+        "pro",
+        "business"
+      ],
+      "default": "free",
+      "description": "Subscription plan"
+    },
+    "scansUsed": {
+      "type": "number",
+      "default": 0,
+      "description": "Number of scans used in current period"
+    },
+    "alertSettings": {
+      "type": "object",
+      "description": "Custom alert preferences",
+      "properties": {
+        "highRiskAlert": {
+          "type": "boolean",
+          "default": true
+        },
+        "analysisCompleteAlert": {
+          "type": "boolean",
+          "default": true
+        },
+        "lawyerResponseAlert": {
+          "type": "boolean",
+          "default": true
+        },
+        "weeklyDigest": {
+          "type": "boolean",
+          "default": false
+        }
+      }
+    }
+  },
+  "required": [
+    "authId",
+    "email"
+  ],
+  "rls": {
+    "create": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "read": {
+      "$or": [
+        {
+          "data.authId": "{{user.id}}"
+        },
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        }
+      ]
+    },
+    "update": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "delete": {
+      "user_condition": {
+        "role": "admin"
+      }
+    }
+  }
+}
