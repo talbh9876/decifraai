@@ -1,0 +1,11 @@
+// Placeholder schema — no models yet. Establishes the datasource/generator
+// so `prisma validate`/`generate` work before any real schema is designed.
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
