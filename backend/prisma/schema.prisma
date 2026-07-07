@@ -1,6 +1,3 @@
-// Placeholder schema — no models yet. Establishes the datasource/generator
-// so `prisma validate`/`generate` work before any real schema is designed.
-
 datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
@@ -8,4 +5,34 @@ datasource db {
 
 generator client {
   provider = "prisma-client-js"
+}
+
+enum Role {
+  USER
+  LAWYER
+  ADMIN
+}
+
+enum Plan {
+  FREE
+  BEGINNER
+  PRO
+  BUSINESS
+}
+
+// Canonical user model — unifies Base44's separate `User` and `Users`
+// entities (see PROJECT_TASKS.md) into a single source of truth.
+model User {
+  id            String   @id @default(uuid())
+  authId        String   @unique
+  email         String   @unique
+  name          String?
+  role          Role     @default(USER)
+  plan          Plan     @default(FREE)
+  scansUsed     Int      @default(0)
+  alertSettings Json?
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+
+  @@map("users")
 }

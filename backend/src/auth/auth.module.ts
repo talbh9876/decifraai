@@ -1,5 +1,8 @@
 import { Module } from '@nestjs/common';
+import { AuthService } from './auth.service';
 
-// Placeholder module — authentication logic lands here in a later task.
-@Module({})
+@Module({
+  providers: [AuthService],
+  exports: [AuthService],
+})
 export class AuthModule {}

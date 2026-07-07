@@ -1,5 +1,10 @@
 import { Module } from '@nestjs/common';
+import { PrismaModule } from '../common/prisma.module';
+import { UsersService } from './users.service';
 
-// Placeholder module — user management logic lands here in a later task.
-@Module({})
+@Module({
+  imports: [PrismaModule],
+  providers: [UsersService],
+  exports: [UsersService],
+})
 export class UsersModule {}
